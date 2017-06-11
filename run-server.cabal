@@ -1,19 +1,19 @@
-Name: elm-public-library
+Name: frelm-public-library
 Version: 0.1
 
 Synopsis:
-  Server for hosting the Elm Public Library
+  Alternative server for hosting the Elm Public Library
 
 Description:
-  Generates web pages for docemuntation
+  Generates web pages for documentation
 
-Homepage: http://library.elm-lang.org
+Homepage: http://package.frelm.org
 
 License: BSD3
 License-file: LICENSE
 
-Author:     Evan Czaplicki
-Maintainer: info@elm-lang.org
+Author:     Ryan Rempel
+Maintainer: rgrempel@gmail.com
 Copyright:  Copyright (c) 2013-2014 Evan Czaplicki
 
 Category: Language
@@ -23,7 +23,7 @@ Cabal-version: >=1.9
 
 source-repository head
   type:     git
-  location: git://github.com/elm-lang/package.elm-lang.org.git
+  location: git://github.com/rgrempel/package.frelm.org.git
 
 Executable run-server
   hs-source-dirs:
@@ -45,11 +45,11 @@ Executable run-server
     cmdargs,
     containers,
     elm-compiler == 0.18,
-    elm-package,
+    frelm-package,
     directory,
     filepath,
     mtl,
-    snap-core,
+    snap-core < 1.0.0,
     snap-server,
     text,
     time,

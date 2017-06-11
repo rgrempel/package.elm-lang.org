@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
-    "summary": "website for browsing packages and exploring documentation",
-    "repository": "https://github.com/elm-lang/pkgs.git",
+    "summary": "Alternative website for browsing Elm packages and exploring documentation",
+    "repository": "https://github.com/rgrempel/package.frelm.org.git",
     "license": "BSD3",
     "source-directories": [
         "src/frontend"

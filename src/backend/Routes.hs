@@ -24,7 +24,6 @@ import qualified Elm.Package.Description as Desc
 import qualified Elm.Package.Paths as Path
 import qualified GitHub
 import qualified NewPackageList
-import qualified Whitelists
 import qualified PackageSummary as PkgSummary
 import qualified ServeFile
 
@@ -63,7 +62,7 @@ servePackageInfo name version =
 
 serveAssets :: FilePath -> Snap ()
 serveAssets pkgDir =
-  do  modifyResponse $ addHeader "Access-Control-Allow-Origin" "http://elm-lang.org"
+  do  modifyResponse $ addHeader "Access-Control-Allow-Origin" "https://frelm.org"
       serveDirectory pkgDir
 
 
@@ -133,8 +132,7 @@ register =
       description <- Desc.read id (directory </> Path.description)
 
       result <-
-          liftIO $ runExceptT $ do
-            verifyWhitelist (Desc.natives description) (Desc.name description)
+          liftIO $ runExceptT $
             splitDocs directory
 
       case result of
@@ -195,43 +193,6 @@ verifyVersion name version =
           else
             httpStringError 400 $
               "The tag " ++ Pkg.versionToString version ++ " has not been pushed to GitHub."
-
-
-verifyWhitelist :: Bool -> Pkg.Name -> ExceptT String IO ()
-verifyWhitelist allowNatives name =
-  case allowNatives of
-    False ->
-      return ()
-
-    True ->
-      do  onList <- liftIO (Whitelists.checkNative name)
-          if onList then return () else throwError whitelistError
-
-
-whitelistError :: String
-whitelistError =
-  unlines
-    [ "It is not possible to publish packages with native modules."
-    , ""
-    , "Elm compiles to JavaScript right now, but that may not always be true. For the"
-    , "long-term health of our package ecosystem, as many packages as possible should"
-    , "be written in Elm. This definitely means we will grow a bit slower, but I am"
-    , "willing to pay that cost if it leads to a better community and ecosystem!"
-    , ""
-    , "Point is: Use ports to talk to JS libraries. If you want that JS library as an"
-    , "Elm package, rewrite it in Elm."
-    , ""
-    , "Now there are a shrinking number of cases where you cannot write the package"
-    , "entirely in Elm. The @elm-lang organization on GitHub is meant to own any Web"
-    , "Platform APIs. So if you are wondering how to make bindings to a Web Platform"
-    , "library for vibration (for example) come talk to folks on elm-dev about it."
-    , ""
-    , "    <https://groups.google.com/forum/#!forum/elm-dev>"
-    , ""
-    , "There is no guarantee that there will be easy contributions that will make it"
-    , "happen quickly, but poor communication definitely makes things more difficult."
-    ]
-
 
 
 -- UPLOADING FILES
@@ -312,17 +273,6 @@ versions =
   do  name <- getParameter "name" Pkg.fromString
       versions <- liftIO (PkgSummary.readVersionsOf name)
       writeLBS (Binary.encode versions)
-
-
-
--- SEE IF A PACKAGE IS ON THE EFFECT MANAGER WHITELIST
-
-
-permissions :: Snap ()
-permissions =
-  do  name <- getParameter "name" Pkg.fromString
-      onList <- liftIO (Whitelists.checkEffect name)
-      writeLBS (Binary.encode onList)
 
 
 

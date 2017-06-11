@@ -1,0 +1,26 @@
+{
+  "name": "package.frelm.org",
+  "version": "1.0.0",
+  "description": "Alternative website for browsing Elm packages and exploring documentation",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "elm": "^0.18.0"
+  },
+  "scripts": {
+    "artifacts": "sh scripts/artifacts.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rgrempel/package.frelm.org.git"
+  },
+  "author": "Ryan Rempel <rgrempel@gmail.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/rgrempel/package.frelm.org/issues"
+  },
+  "homepage": "https://package.frelm.org"
+}

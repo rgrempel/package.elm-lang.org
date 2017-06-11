@@ -50,13 +50,12 @@ main =
           compileElmFiles
 
       httpServe (setPort (port cargs) defaultConfig) $
-          ifTop (ServeFile.elm "Elm Packages" ["Page","Catalog"])
+          ifTop (ServeFile.elm "Alternative Elm Packages" ["Page","Catalog"])
           <|>
             route
             [ ( "packages", Route.packages )
             , ( "versions", Route.versions )
             , ( "register", Route.register )
-            , ( "permissions", Route.permissions )
             , ( "description", Route.description )
             , ( "documentation", Route.documentation )
             , ( "all-packages", Route.allPackages )

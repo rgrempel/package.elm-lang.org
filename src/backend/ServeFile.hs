@@ -158,7 +158,6 @@ makeHtml title elmModule maybeLink makePorts =
           meta ! charset "UTF-8"
           favicon
           H.title (toHtml title)
-          googleAnalytics
           Maybe.fromMaybe (return ()) maybeLink
           link ! rel "stylesheet" ! href (cacheBuster "/assets/highlight/styles/default.css")
           link ! rel "stylesheet" ! href (cacheBuster "/assets/style.css")
@@ -178,18 +177,6 @@ makeHtml title elmModule maybeLink makePorts =
                 ++ ports
                 ++ ");\n\n"
                 ++ postScript
-
-
-googleAnalytics :: Html
-googleAnalytics =
-  script ! type_ "text/javascript" $
-    "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n\
-    \(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n\
-    \m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n\
-    \})(window,document,'script','//www.google-analytics.com/analytics.js','ga');\n\
-    \\n\
-    \ga('create', 'UA-25827182-1', 'auto');\n\
-    \ga('send', 'pageview');\n"
 
 
 favicon :: H.Html
